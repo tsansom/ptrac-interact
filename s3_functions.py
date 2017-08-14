@@ -63,6 +63,8 @@ def read_outflw1(year, month, s3, bucket):
         outflw1[k]['u'] = -1 * outflw1[k]['velocity'] * np.sin(np.deg2rad(outflw1[k]['direction']))
         outflw1[k]['v'] = -1 * outflw1[k]['velocity'] * np.cos(np.deg2rad(outflw1[k]['direction']))
 
+
+
     return outflw1
 
 def read_coords(zone_number, zone_letter, extent, s3, bucket):
@@ -106,11 +108,11 @@ def read_coords(zone_number, zone_letter, extent, s3, bucket):
     ].index.tolist()
     coords_clipped = coords.iloc[coords_clipped_nodes]
 
-    loni = np.linspace(min(coords['lon']), max(coords['lon']), 100)
-    lati = np.linspace(min(coords['lat']), max(coords['lat']), 100)
+    loni = np.linspace(min(coords_clipped['lon']), max(coords_clipped['lon']), 100)
+    lati = np.linspace(min(coords_clipped['lat']), max(coords_clipped['lat']), 100)
 
     #return coords, coords_clipped
-    return coords_clipped, loni, lati
+    return coords, coords_clipped, loni, lati
 
 def read_avesalD(year, month, s3, bucket):
     #create the key and open the file
