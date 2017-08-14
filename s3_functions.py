@@ -106,8 +106,11 @@ def read_coords(zone_number, zone_letter, extent, s3, bucket):
     ].index.tolist()
     coords_clipped = coords.iloc[coords_clipped_nodes]
 
+    loni = np.linspace(min(coords['lon']), max(coords['lon']), 100)
+    lati = np.linspace(min(coords['lat']), max(coords['lat']), 100)
+
     #return coords, coords_clipped
-    return coords_clipped
+    return coords_clipped, loni, lati
 
 def read_avesalD(year, month, s3, bucket):
     #create the key and open the file
