@@ -63,11 +63,9 @@ def read_outflw1(year, month, s3, bucket):
         outflw1[k]['u'] = -1 * outflw1[k]['velocity'] * np.sin(np.deg2rad(outflw1[k]['direction']))
         outflw1[k]['v'] = -1 * outflw1[k]['velocity'] * np.cos(np.deg2rad(outflw1[k]['direction']))
 
-
-
     return outflw1
 
-def read_coords(zone_number, zone_letter, extent, s3, bucket):
+def read_coords(zone_number, zone_letter, extent, grid_resolution, s3, bucket):
     #only needed to call this once so harcoding year and month
     year = '1993'
     month = '0401'
@@ -108,8 +106,8 @@ def read_coords(zone_number, zone_letter, extent, s3, bucket):
     ].index.tolist()
     coords_clipped = coords.iloc[coords_clipped_nodes]
 
-    loni = np.linspace(min(coords_clipped['lon']), max(coords_clipped['lon']), 100)
-    lati = np.linspace(min(coords_clipped['lat']), max(coords_clipped['lat']), 100)
+    loni = np.linspace(min(coords_clipped['lon']), max(coords_clipped['lon']), grid_resolution)
+    lati = np.linspace(min(coords_clipped['lat']), max(coords_clipped['lat']), grid_resolution)
 
     #return coords, coords_clipped
     return coords, coords_clipped, loni, lati

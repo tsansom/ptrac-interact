@@ -34,11 +34,13 @@ def create_polygon(shape):
 def inpolygon(polygon, xp, yp):
 	return np.array([sgeom.Point(x,y).intersects(polygon) for x,y in zip(xp,yp)],dtype=np.bool)
 
-def create_mask(coords, polygon):
+def create_mask(coords, grid_resolution, polygon):
     lato = np.array(coords['lat'])
     lono = np.array(coords['lon'])
-    lati = np.linspace(min(lato), max(lato), 100)
-    loni = np.linspace(min(lono), max(lono), 100)
+    lati = np.linspace(min(lato), max(lato), grid_resolution)
+    loni = np.linspace(min(lono), max(lono), grid_resolution)
     glon, glat = np.meshgrid(loni, lati)
     mask = inpolygon(polygon, glon.ravel(), glat.ravel()).reshape(glon.shape)
-    return mask, lati, loni
+    mask_list = mask.tolist()
+
+    return mask
